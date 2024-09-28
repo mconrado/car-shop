@@ -1,0 +1,38 @@
+NAO-COMMITAR/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# Ambiente virtual
+venv/
+env/
+ENV/
+.venv/
+
+# Docker
+*.log
+docker-compose.override.yml
+docker-compose.prod.yml
+
+# Arquivos de configuração do IDE
+.idea/
+.vscode/
+*.swp
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos de ambiente
+.env
+
+# Outros
+*.egg-info/
+dist/
+build/
+
