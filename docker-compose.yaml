@@ -18,6 +18,7 @@ services:
       - "5000:5000"
     volumes:
       - ./app:/app
+      - ./tests:/tests
     environment:
       - FLASK_ENV=development  
     command: flask run --host=0.0.0.0 --reload
