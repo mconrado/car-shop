@@ -22,7 +22,7 @@ docker exec -it -e FLASK_ENV=testing car-shop-web-1 pytest ../tests
 
 5. Faça a carga de dados
 ```console
-docker exec -it -e FLASK_ENV=development flask db upgrade
+docker exec -it -e FLASK_ENV=development car-shop-web-1 flask db upgrade
 ```
 
 
