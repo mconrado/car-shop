@@ -3,11 +3,12 @@ from app import app, db
 from app.models.owner import Owner
 from app.config import Config
 from datetime import datetime
-import re
+from app.validators import is_valid_email
 
 @pytest.fixture(scope='module')
 def test_client():
     app.config.from_object(Config)
+    app.config['TESTING'] = True
     with app.app_context():
         db.create_all()
         yield app.test_client()
@@ -39,8 +40,3 @@ def test_sales_opportunity_default_to_False(setup_owner):
 
 def test_email_field_is_email(setup_owner):
     assert is_valid_email(setup_owner.email)
-
-def is_valid_email(email):
-    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-    return re.match(pattern, email) is not None
-

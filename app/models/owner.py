@@ -6,7 +6,7 @@ class Owner(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False)
     email = db.Column(db.String(100), nullable=False, unique=True)
-    sales_o = db.Column(db.Boolean, default=False)
+    sales_o = db.Column(db.Boolean, nullable=False, default=False)
     creation_date = db.Column(db.DateTime, default=db.func.current_timestamp())
 
     def __repr__(self):

@@ -6,3 +6,5 @@ app = Flask(__name__)
 app.config.from_object('app.config.Config')
 db.init_app(app)
 
+from app.app import *
+
