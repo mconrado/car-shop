@@ -1,29 +1,21 @@
 import pytest
-from app import app, db
+from app import db
 from app.models.owner import Owner
-from app.config import Config
 from datetime import datetime
 from app.validators import is_valid_email
 
-@pytest.fixture(scope='module')
-def test_client():
-    app.config.from_object(Config)
-    app.config['TESTING'] = True
-    with app.app_context():
-        db.create_all()
-        yield app.test_client()
-        db.drop_all()
 
 @pytest.fixture(scope='function')
-def setup_owner(test_client):
-    owner = Owner(name="Márcio Conrado", email="marcio@conrado.com")
-    db.session.add(owner)
-    db.session.commit()
-    yield owner
-    db.session.delete(owner)
-    db.session.commit()
+def setup_owner(client):
+    with client.application.app_context():
+        owner = Owner(name="Márcio Conrado", email="marcio@conrado.com")
+        db.session.add(owner)
+        db.session.commit()
+        yield owner
+        db.session.delete(owner)
+        db.session.commit()
 
-def test_owner_model_exists(test_client):
+def test_owner_model_exists(client):
     assert Owner is not None
     assert hasattr(Owner, '__tablename__')
     assert hasattr(Owner, 'id')
