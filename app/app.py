@@ -22,4 +22,3 @@ app.register_blueprint(car_bp)
 @app.route('/')
 def index():
     return "API CAR SHOP"
-
