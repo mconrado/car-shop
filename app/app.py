@@ -1,13 +1,17 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from app.config import Config
+from app.config import Config, TestConfig
 from app.database import db
 from app.routes.owner_routes import owner_bp  # Importa o blueprint
-
+import os
 
 app = Flask(__name__)
-app.config.from_object(Config)
+
+if os.getenv('FLASK_ENV') == 'testing':
+    app.config.from_object(TestConfig)
+else:
+    app.config.from_object(Config)
 
 db.init_app(app)
 migrate = Migrate(app, db)

@@ -11,3 +11,12 @@ class Config:
     SQLALCHEMY_DATABASE_URI = f"mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+class TestConfig:
+    DB_USER = os.getenv('DB_USER') 
+    DB_PASSWORD = os.getenv('MYSQL_ROOT_PASSWORD')
+    DB_HOST = os.getenv('DB_HOST')
+    DB_NAME = 'test_db'
+
+    SQLALCHEMY_DATABASE_URI = f"mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+

@@ -1,10 +1,10 @@
 import pytest
 from app import app, db
-from app.config import Config
+from app.config import TestConfig
 
 @pytest.fixture
 def client():
-    app.config.from_object(Config)
+    app.config.from_object(TestConfig)
     app.config['TESTING'] = True
     with app.test_client() as client:
         with app.app_context():
