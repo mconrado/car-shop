@@ -1,6 +1,6 @@
 # CAR-SHOP API
 
-Sistema de API de produtos e clientes.
+Sistema de API de gerenciamento de carro de um distrito.
 
 *Docker, Flask, Pytest, Flask-Migrate
 
