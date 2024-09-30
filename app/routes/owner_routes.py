@@ -5,6 +5,7 @@ from app import db
 
 owner_bp = Blueprint('owner', __name__)
 
+
 @owner_bp.route('/owner', methods=['POST'])
 def create_owner():
     try:
@@ -24,3 +25,21 @@ def create_owner():
 
     except Exception as e:
         return jsonify({"message": "Erro ao criar proprietário.", "error": str(e)}), 500
+
+
+@owner_bp.route('/owner/<int:owner_id>', methods=['GET'])
+def get_owner(owner_id):
+    try:
+        owner = Owner.query.get(owner_id)
+        
+        if owner is None:
+            return jsonify({"message": "Proprietário não encontrado."}), 404
+        
+        return jsonify({
+            "id": owner.id,
+            "name": owner.name,
+            "email": owner.email
+        }), 200
+
+    except Exception as e:
+        return jsonify({"message": "Erro ao buscar proprietário.", "error": str(e)}), 500
