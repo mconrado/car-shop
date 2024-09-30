@@ -27,10 +27,12 @@ docker exec -it -e FLASK_ENV=development car-shop-web-1 flask db upgrade
 
 
 ### URLs de acesso API:
-owner GET http://localhost:5000/owner/<id>
+owner GET http://localhost:5000/owner/id-registrado
+
 owner POST http://localhost:5000/owner
 
-car GET http://localhost:5000/car/<id>
+car GET http://localhost:5000/car/id-registrado
+
 car POST http://localhost:5000/car
 
 ##### **Ou importe o arquivo postman.json no Postman.*
@@ -47,4 +49,3 @@ Por se tratar de uma modelagem pequena resolvi não tratar como N x N em alguns 
 - relação do proprietário com os carros.
 - relação dos carros com as propriedades cor e modelo, neste caso tratando como imutaveis.
 É válido repensar numa questão de dados maior e sua escalabilidade.
-
