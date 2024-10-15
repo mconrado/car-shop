@@ -30,7 +30,7 @@ def create_owner():
 @owner_bp.route('/owner/<int:owner_id>', methods=['GET'])
 def get_owner(owner_id):
     try:
-        owner = Owner.query.get(owner_id)
+        owner = db.session.get(Owner, owner_id)
         
         if owner is None:
             return jsonify({"message": "Proprietário não encontrado."}), 404
