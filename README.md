@@ -40,7 +40,7 @@ car POST http://localhost:5000/car
 
 
 ### TO-DO:
-- Cobertura de testes incompleta, falta: ~get owner~, todas as rotas de car, validar a regra de negócio.
+- Cobertura de testes incompleta, falta: ~get owner~, ~todas as rotas de car~, validar a regra de negócio.
 - Implementação de regra 3 carros no máximo por proprietário.
 - Automatizar quem não tem carro setar sales_o = True.
 - Talvez um mock para os testes e simulação de dados.
