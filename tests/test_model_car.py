@@ -19,15 +19,16 @@ def setup_owner(client):
 
 @pytest.fixture(scope="function")
 def setup_car(client, setup_owner):
-    car = Car(owner_id=setup_owner.id, color=ColorEnum.BLUE, model=ModelEnum.HATCH)
-    db.session.add(car)
-    db.session.commit()
-    yield car
-    db.session.delete(car)
-    db.session.commit()
+    with client.application.app_context():
+        car = Car(owner_id=setup_owner.id, color=ColorEnum.BLUE, model=ModelEnum.HATCH)
+        db.session.add(car)
+        db.session.commit()
+        yield car
+        db.session.delete(car)
+        db.session.commit()
 
 
-def test_car_model_exists(client):
+def test_car_model_exists():
     assert Car is not None
     assert hasattr(Car, "__tablename__")
     assert hasattr(Car, "id")
@@ -43,12 +44,12 @@ def test_car_creation(setup_car):
     assert setup_car.owner_id is not None
 
 
-def test_creation_date(setup_owner):
-    assert isinstance(setup_owner.creation_date, datetime)
+def test_creation_date(setup_car):
+    assert isinstance(setup_car.creation_date, datetime)
 
 
-def test_owner_cannot_have_more_than_three_cars(setup_owner):
-    for i in range(3):
+def test_not_more_than_three_cars_per_owner(setup_owner):
+    for _ in range(3):
         Car.create_car(setup_owner.id, ColorEnum.BLUE, ModelEnum.HATCH)
 
     with pytest.raises(Exception) as excinfo:

@@ -41,6 +41,7 @@ class Car(db.Model):
     def __init__(self, owner_id, color, model):
         if not self.can_add_car(owner_id):
             raise Exception("Um proprietário não pode ter mais de 3 carros.")
+
         self.owner_id = owner_id
         self.color = color
         self.model = model

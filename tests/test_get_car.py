@@ -15,11 +15,9 @@ def setup(client):
         db.session.add(car)
         db.session.commit()
 
-        yield owner, car
+        yield car
 
-        db.session.expunge(car)
         db.session.delete(car)
-        db.session.expunge(owner)
         db.session.delete(owner)
         db.session.commit()
 
@@ -31,7 +29,6 @@ def test_get_car_not_found(client):
 
 
 def test_get_car(client, setup):
-    owner, car = setup
-    response = client.get(f"/car/{car.id}")
+    response = client.get(f"/car/{setup.id}")
     json_data = response.get_json()
-    assert json_data["id"] == car.id
+    assert json_data["id"] == setup.id

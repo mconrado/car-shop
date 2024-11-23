@@ -14,11 +14,10 @@ def setup_owner(client):
         Car.query.filter_by(owner_id=owner.id).delete()
         db.session.delete(owner)
         db.session.commit()
-    return owner
 
 
 @pytest.fixture(scope="function")
-def car_data(setup_owner):
+def setup_car(setup_owner):
     return {
         "owner_id": setup_owner.id,
         "color": "yellow",
@@ -26,41 +25,41 @@ def car_data(setup_owner):
     }
 
 
-def test_create_car(client, car_data):
-    response = client.post("/car", json=car_data)
+def test_create_car(client, setup_car):
+    response = client.post("/car", json=setup_car)
     assert response.status_code == 201
 
 
-def test_invalid_color(client, car_data):
-    car_data["color"] = "invalid_color"
+def test_invalid_color(client, setup_car):
+    setup_car["color"] = "invalid_color"
 
-    response = client.post("/car", json=car_data)
+    response = client.post("/car", json=setup_car)
     assert response.status_code == 500
 
     db.session.rollback()
 
 
-def test_invalid_model(client, car_data):
-    car_data["model"] = "invalid_model"
+def test_invalid_model(client, setup_car):
+    setup_car["model"] = "invalid_model"
 
-    response = client.post("/car", json=car_data)
+    response = client.post("/car", json=setup_car)
     assert response.status_code == 500
 
     db.session.rollback()
 
 
-def test_missing_owner_id(client, car_data):
-    del car_data["owner_id"]
-    response = client.post("/car", json=car_data)
+def test_missing_owner_id(client, setup_car):
+    del setup_car["owner_id"]
+    response = client.post("/car", json=setup_car)
     json_data = response.get_json()
     assert "Owner ID, cor e modelo são obrigatórios." in json_data["message"]
 
 
-def test_owner_cannot_have_more_than_three_cars(client, setup_owner, car_data):
-    for i in range(3):
-        Car.create_car(setup_owner.id, ColorEnum.BLUE, ModelEnum.HATCH)
+def test_owner_cannot_have_more_than_three_cars(client, setup_car):
+    for _ in range(3):
+        Car.create_car(setup_car["owner_id"], ColorEnum.BLUE, ModelEnum.HATCH)
 
-    response = client.post("/car", json=car_data)
+    response = client.post("/car", json=setup_car)
 
     json_data = response.get_json()
     assert "Erro ao criar carro." in json_data["message"]
