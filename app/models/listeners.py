@@ -17,11 +17,9 @@ def update_owner_sales_o(connection, owner_id):
 
 @event.listens_for(Car, "after_insert")
 def update_owner_sales_o_on_insert(mapper, connection, target):
-    owner_id = target.owner_id
-    update_owner_sales_o(connection, owner_id)
+    update_owner_sales_o(connection, target.owner_id)
 
 
 @event.listens_for(Car, "after_delete")
 def update_owner_sales_o_on_delete(mapper, connection, target):
-    owner_id = target.owner_id
-    update_owner_sales_o(connection, owner_id)
+    update_owner_sales_o(connection, target.owner_id)
